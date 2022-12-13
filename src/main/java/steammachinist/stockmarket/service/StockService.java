@@ -24,4 +24,9 @@ public class StockService {
     public void addStock(Stock stock) {
         stockRepository.save(stock);
     }
+
+    public void addStocks(List<Stock> stocks) {
+        stockRepository.saveAll(stocks);
+    }
+
 }

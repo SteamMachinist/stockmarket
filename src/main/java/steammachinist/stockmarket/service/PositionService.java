@@ -25,4 +25,8 @@ public class PositionService {
     public void addPosition(Position position) {
         positionRepository.save(position);
     }
+
+    public void addPositions(List<Position> positions) {
+        positionRepository.saveAll(positions);
+    }
 }

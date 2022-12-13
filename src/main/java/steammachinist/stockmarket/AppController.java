@@ -1,11 +1,8 @@
 package steammachinist.stockmarket;
 
-import com.opencsv.exceptions.CsvException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.io.IOException;
 
 @RestController
 public class AppController {
@@ -13,7 +10,7 @@ public class AppController {
     private TestDataFiller testDataFiller;
 
     @GetMapping("/")
-    public String hello() throws IOException, CsvException {
+    public String hello() {
         testDataFiller.fill();
         return "hello";
     }

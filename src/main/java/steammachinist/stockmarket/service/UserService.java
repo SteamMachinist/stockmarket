@@ -2,6 +2,7 @@ package steammachinist.stockmarket.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import steammachinist.stockmarket.entitymodel.Stock;
 import steammachinist.stockmarket.entitymodel.User;
 import steammachinist.stockmarket.repository.UserRepository;
 
@@ -23,5 +24,9 @@ public class UserService {
 
     public void addStock(User user) {
         userRepository.save(user);
+    }
+
+    public void addUsers(List<User> users) {
+        userRepository.saveAll(users);
     }
 }
