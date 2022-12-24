@@ -29,4 +29,7 @@ public class StockService {
         stockRepository.saveAll(stocks);
     }
 
+    public long count() {
+        return stockRepository.count();
+    }
 }

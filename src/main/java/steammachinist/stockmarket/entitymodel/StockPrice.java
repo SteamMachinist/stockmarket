@@ -7,8 +7,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -29,5 +31,28 @@ public class StockPrice {
         this.buy = buy;
         this.sell = sell;
         this.lastChange = lastChange;
+    }
+
+    public void setBuyLastChange(Double buy, LocalDateTime lastChange) {
+        setBuy(buy);
+        setLastChange(lastChange);
+    }
+
+    public void setSellLastChange(Double sell, LocalDateTime lastChange) {
+        setBuy(sell);
+        setLastChange(lastChange);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        StockPrice that = (StockPrice) o;
+        return stock != null && Objects.equals(stock, that.stock);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

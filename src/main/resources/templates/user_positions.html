@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Personal positions</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Stock name</th>
+        <th>Quantity</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${positions.isEmpty()}">
+        <td colspan="2">You hold no stocks</td>
+    </tr>
+    <tr th:each="position : ${positions}">
+        <td><span th:text="${position.getPositionId().getStock().getFullName()}">Stock name</span></td>
+        <td><span th:text="${position.getQuantity()}">Quantity</span></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,14 +1,14 @@
-package steammachinist.stockmarket;
+package steammachinist.stockmarket.testdata;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.ArrayUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
-import steammachinist.stockmarket.entitymodel.Position;
-import steammachinist.stockmarket.entitymodel.PositionId;
-import steammachinist.stockmarket.entitymodel.Stock;
-import steammachinist.stockmarket.entitymodel.User;
+import steammachinist.stockmarket.entitymodel.*;
+import steammachinist.stockmarket.utils.ListUtils;
 import steammachinist.stockmarket.service.PositionService;
 import steammachinist.stockmarket.service.StockService;
 import steammachinist.stockmarket.service.UserService;
@@ -26,15 +26,16 @@ public class TestDataFiller {
     private final Random random = new Random();
 
     public void fill() {
-        if (positionService.getAllPositions().isEmpty()) {
+        if (positionService.count() == 0) {
 
             List<Stock> stocks = readStocksFromFile();
-            if(stockService.getAllStocks().isEmpty()) {
+            if(stockService.count() == 0) {
                 stockService.addStocks(stocks);
             }
 
             List<User> users = readUsersFromFile();
-            if(userService.getAllUsers().isEmpty()) {
+            Collections.shuffle(users);
+            if(userService.count() == 0) {
                 userService.addUsers(users);
             }
 
@@ -67,10 +68,10 @@ public class TestDataFiller {
 
     private User createRandomizedUser(String firstName, String lastName) {
         String username = firstName + lastName + random.nextInt(1000, 9999);
-        Character[] password = ArrayUtils.toObject(UUID.randomUUID().toString().replace("-", "").toCharArray());
+        String password = "password";
         String email = lastName + "_" + firstName.charAt(0) + "_" + random.nextInt(1950, 2005) + "@mail.com";
         double balance = random.nextInt(3000, 30001) + random.nextInt(100) / 100.0;
-        return new User(username, password, firstName, lastName, email, balance);
+        return new User(Collections.singleton(Role.USER), username, password, firstName, lastName, email, balance);
     }
 
     private List<Position> generateRandomPositions(List<User> users, List<Stock> stocks) {

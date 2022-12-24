@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import steammachinist.stockmarket.entitymodel.Position;
 import steammachinist.stockmarket.entitymodel.PositionId;
+import steammachinist.stockmarket.entitymodel.User;
 import steammachinist.stockmarket.repository.PositionRepository;
 
 import java.util.List;
@@ -28,5 +29,13 @@ public class PositionService {
 
     public void addPositions(List<Position> positions) {
         positionRepository.saveAll(positions);
+    }
+
+    public long count() {
+        return positionRepository.count();
+    }
+
+    public List<Position> getUserPositions(User user) {
+        return positionRepository.getPositionsByPositionId_User(user);
     }
 }

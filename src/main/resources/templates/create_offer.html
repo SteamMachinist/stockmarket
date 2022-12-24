@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Offer</title>
+</head>
+<body>
+<form action="/account/create_offer" th:object="${offerForm}" method="post">
+        <select th:if="${not #lists.isEmpty(types)}" name="selectType" th:field="*{type}">
+            <option th:each="type : ${types}"
+                    th:text="${type.name}"
+                    th:value="${type}"/>
+        </select>
+
+
+        <select th:if="${not #lists.isEmpty(allStocksList)}" name="selectStock" th:field="*{stock}">
+            <option
+                th:each="stock : ${allStocksList}"
+                th:text="${stock.fullName}"
+                th:value="${stock.id}"/>
+
+            <!--
+
+              <option th:if="${chosenType.name == 'BUY'}"
+                      th:each="stock : ${allStocksList}"
+                      th:value="${stock}"
+                      th:text="${stock.fullName}" />
+
+              <option th:if="${chosenType.name == 'SELL'}"
+                      th:each="stock : ${userStocksList}"
+                      th:value="${stock}"
+                      th:text="${stock.fullName}" />
+            -->
+        </select>
+
+    <label><input name="unitPrice" placeholder="unit price" th:value="${offer?.unitPrice}" type="number" step="0.01"></label>
+    <label><input name="quantity" placeholder="quantity" th:value="${offer?.quantity}" type="number"></label>
+
+    <input type="submit" value="Create offer"/>
+
+    <!--CSRF Token-->
+    <input
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+            type="hidden"/>
+</form>
+</body>
+</html>

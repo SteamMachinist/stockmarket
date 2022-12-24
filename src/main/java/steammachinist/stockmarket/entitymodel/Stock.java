@@ -15,8 +15,6 @@ import java.util.Objects;
 @ToString
 @NoArgsConstructor
 public class Stock {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

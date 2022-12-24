@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class Trade {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

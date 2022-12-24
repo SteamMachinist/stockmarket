@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<div th:text="${errorMessage}"></div>
+<form action="/registration" method="post">
+    <div><label><input name="name" placeholder="Name" th:value="${user?.name}" type="text"></label></div>
+    <div><label><input name="surname" placeholder="Last name" th:value="${user?.lastName}" type="text"></label></div>
+    <div><label><input name="username" placeholder="Username/login" th:value="${user?.username}" type="text"></label></div>
+    <div><label><input name="password" placeholder="Password" th:value="${user?.password}" type="password"></label></div>
+    <div><label><input name="email" placeholder="Email" th:value="${user?.email}" type="password"></label></div>
+    <div><label><input name="passwordConfirm" placeholder="Repeat password" th:value="${passwordConfirm}" type="password"></label></div>
+    <div><input type="submit" value="Register"/></div>
+
+    <!--CSRF Token-->
+    <input
+            th:name="${_csrf.parameterName}"
+            th:value="${_csrf.token}"
+            type="hidden"/>
+</form>
+</body>
+</html>

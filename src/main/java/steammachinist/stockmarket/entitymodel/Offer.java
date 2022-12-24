@@ -11,8 +11,6 @@ import java.time.LocalDateTime;
 @ToString
 @NoArgsConstructor
 public class Offer {
-    @Getter(AccessLevel.NONE)
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -28,14 +26,15 @@ public class Offer {
     @Enumerated(EnumType.STRING)
     private OfferType type;
 
-    private Double unit_price;
+    private Double unitPrice;
     private Integer quantity;
     private LocalDateTime open;
 
-    public Offer(User creator, Stock stock, Double unit_price, Integer quantity, LocalDateTime open) {
+    public Offer(User creator, Stock stock, OfferType type, Double unitPrice, Integer quantity, LocalDateTime open) {
         this.creator = creator;
         this.stock = stock;
-        this.unit_price = unit_price;
+        this.type = type;
+        this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.open = open;
     }
