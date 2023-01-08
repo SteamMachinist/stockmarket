@@ -1,10 +1,12 @@
-package steammachinist.stockmarket.service;
+package steammachinist.stockmarket.service.dataservice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import steammachinist.stockmarket.entitymodel.Offer;
+import steammachinist.stockmarket.entitymodel.User;
 import steammachinist.stockmarket.repository.OfferRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service

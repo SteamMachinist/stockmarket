@@ -1,4 +1,4 @@
-package steammachinist.stockmarket.service;
+package steammachinist.stockmarket.service.dataservice;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

@@ -3,15 +3,12 @@ package steammachinist.stockmarket.testdata;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.ArrayUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import steammachinist.stockmarket.entitymodel.*;
 import steammachinist.stockmarket.utils.ListUtils;
-import steammachinist.stockmarket.service.PositionService;
-import steammachinist.stockmarket.service.StockService;
-import steammachinist.stockmarket.service.UserService;
+import steammachinist.stockmarket.service.dataservice.PositionService;
+import steammachinist.stockmarket.service.dataservice.StockService;
+import steammachinist.stockmarket.service.dataservice.UserService;
 
 import java.io.FileReader;
 import java.io.IOException;

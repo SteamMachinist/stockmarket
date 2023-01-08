@@ -11,10 +11,10 @@
 <div th:text="${errorMessage}"></div>
 <form action="/registration" method="post">
     <div><label><input name="name" placeholder="Name" th:value="${user?.name}" type="text"></label></div>
-    <div><label><input name="surname" placeholder="Last name" th:value="${user?.lastName}" type="text"></label></div>
+    <div><label><input name="lastName" placeholder="Last name" th:value="${user?.lastName}" type="text"></label></div>
     <div><label><input name="username" placeholder="Username/login" th:value="${user?.username}" type="text"></label></div>
+    <div><label><input name="email" placeholder="Email" th:value="${user?.email}" type="email"></label></div>
     <div><label><input name="password" placeholder="Password" th:value="${user?.password}" type="password"></label></div>
-    <div><label><input name="email" placeholder="Email" th:value="${user?.email}" type="password"></label></div>
     <div><label><input name="passwordConfirm" placeholder="Repeat password" th:value="${passwordConfirm}" type="password"></label></div>
     <div><input type="submit" value="Register"/></div>
 

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import steammachinist.stockmarket.entitymodel.User;
-import steammachinist.stockmarket.service.UserService;
+import steammachinist.stockmarket.service.dataservice.UserService;
 
 
 @Controller
@@ -41,7 +41,7 @@ public class RegistrationController {
             model.addAttribute("errorMessage", "Passwords does not match");
             return "registration";
         }
-        userService.addUser(userForm);
+        userService.addDefaultUser(userForm);
         return "redirect:/";
     }
 }
