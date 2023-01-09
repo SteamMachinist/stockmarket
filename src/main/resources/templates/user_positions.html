@@ -16,14 +16,21 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:if="${positions.isEmpty()}">
+    <tr th:if="${positionsPage.content.isEmpty()}">
         <td colspan="2">You hold no stocks</td>
     </tr>
-    <tr th:each="position : ${positions}">
+    <tr th:each="position : ${positionsPage.content}">
         <td><span th:text="${position.getPositionId().getStock().getFullName()}">Stock name</span></td>
         <td><span th:text="${position.getQuantity()}">Quantity</span></td>
     </tr>
     </tbody>
 </table>
+
+<div th:if="${positionsPage.totalPages > 0}" class="pagination"
+     th:each="pageNumber : ${pageNumbers}">
+    <a th:href="@{/account/positions(size=${positionsPage.size}, page=${pageNumber})}"
+       th:text="${pageNumber}"
+       th:class="${pageNumber==positionsPage.number + 1} ? active"></a>
+</div>
 </body>
 </html>

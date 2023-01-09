@@ -9,9 +9,14 @@
 </head>
 <body>
 <div th:text="${user.getUsername()}"></div>
-<form method="post" th:action="@{/logout}"><input type="submit" value="Logout"/></form>
+<div>Balance: <th:block th:text="${user.getBalance()}"></th:block></div>
+
 <form method="get" th:action="@{/account/positions}"><input type="submit" value="Positions"/></form>
+<form method="get" th:action="@{/account/offers}"><input type="submit" value="Offers"/></form>
 <form method="get" th:action="@{/account/offer/create/{type}(type=buy)}"><input type="submit" value="Create buy offer"/></form>
 <form method="get" th:action="@{/account/offer/create/{type}(type=sell)}"><input type="submit" value="Create sell offer"/></form>
+<form method="get" th:action="@{/account/trades}"><input type="submit" value="Trades"/></form>
+<p> </p>
+<form method="post" th:action="@{/logout}"><input type="submit" value="Logout"/></form>
 </body>
 </html>

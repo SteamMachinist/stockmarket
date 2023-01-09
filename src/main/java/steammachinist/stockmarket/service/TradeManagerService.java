@@ -64,33 +64,40 @@ public class TradeManagerService implements ApplicationListener<NewOfferEvent> {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        updateUsersBalances(buy.getCreator(), sell.getCreator(), sum);
         updateUsersOffers(buy, sell, quantity);
+        updateUsersBalances(buy.getCreator(), sell.getCreator(), sum);
         Trade trade = new Trade(sell.getCreator(), buy.getCreator(),
                 sell.getStock(), unitPrice, quantity, LocalDateTime.now());
         tradeService.addTrade(trade);
     }
 
     private boolean isTradePossible(Offer buy, Offer sell, double sum, int quantity) {
-        return buy.getCreator().getBalance() >= sum && sell.getQuantity() >= quantity;
+        try {
+            return buy.getCreator().getBalance() >= sum
+                    && sell.getQuantity() >= quantity
+                    && positionService.getUserPositionOnStock(sell.getCreator(), sell.getStock()).getQuantity() >= quantity;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void updateUsersPositions(User buyer, User seller, Stock stock, int quantity) throws Exception {
-        PositionId buyerPositionId = new PositionId(stock, buyer);
-        try {
-            positionService.addPosition(new Position(buyerPositionId,
-                    positionService.findById(buyerPositionId).getQuantity() + quantity));
-        } catch (Exception e) {
-            positionService.addPosition(new Position(buyerPositionId, quantity));;
+        Position buyerPosition = positionService.getUserPositionOnStock(buyer, stock);
+        if (buyerPosition == null) {
+            positionService.addPosition(new Position(new PositionId(stock, buyer), quantity));
+        } else {
+            buyerPosition.setQuantity(buyerPosition.getQuantity() + quantity);
+            positionService.addPosition(buyerPosition);
         }
 
-        PositionId sellerPositionId = new PositionId(stock, seller);
-        if (positionService.findById(sellerPositionId).getQuantity() == quantity) {
-            positionService.deletePosition(new Position(sellerPositionId, quantity));
-        }
-        else {
-            positionService.addPosition(new Position(sellerPositionId,
-                    positionService.findById(sellerPositionId).getQuantity() - quantity));
+        Position sellerPosition = positionService.getUserPositionOnStock(seller, stock);
+        if (sellerPosition == null) {
+            throw new Exception();
+        } else if (sellerPosition.getQuantity() == quantity) {
+            positionService.deletePosition(sellerPosition);
+        } else {
+            sellerPosition.setQuantity(sellerPosition.getQuantity() - quantity);
+            positionService.addPosition(sellerPosition);
         }
     }
 
@@ -106,16 +113,20 @@ public class TradeManagerService implements ApplicationListener<NewOfferEvent> {
     }
 
     private void updateUsersOffers(Offer buy, Offer sell, int quantity) {
-        if (buy.getQuantity() == quantity) {
+        buy.setQuantity(buy.getQuantity() - quantity);
+        sell.setQuantity(sell.getQuantity() - quantity);
+
+        if (buy.getQuantity() == 0) {
             offerService.deleteOffer(buy);
-        } else {
-            buy.setQuantity(buy.getQuantity() - quantity);
+        }
+        if (sell.getQuantity() == 0) {
+            offerService.deleteOffer(sell);
+        }
+
+        if (buy.getQuantity() != 0) {
             offerService.addOffer(buy);
         }
-        if (sell.getQuantity() == quantity) {
-            offerService.deleteOffer(sell);
-        } else {
-            sell.setQuantity(sell.getQuantity() - quantity);
+        if (sell.getQuantity() != 0) {
             offerService.addOffer(sell);
         }
     }

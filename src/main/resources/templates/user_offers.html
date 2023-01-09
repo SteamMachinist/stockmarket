@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>User offers</title>
 </head>
 <body>
-
+<table>
+    <thead>
+    <tr>
+        <th>Stock name</th>
+        <th>Type</th>
+        <th>Unit price</th>
+        <th>Quantity</th>
+        <th>Open</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${offers.isEmpty()}">
+        <td colspan="5">You have not made any offers</td>
+    </tr>
+    <tr th:each="offer : ${offers}">
+        <td><span th:text="${offer.getStock().getFullName()}">Stock name</span></td>
+        <td><span th:text="${offer.type.name().toLowerCase()}">Type</span></td>
+        <td><span th:text="${offer.unitPrice}">Unit price</span></td>
+        <td><span th:text="${offer.getQuantity()}">Quantity</span></td>
+        <td><span th:text="${offer.getOpen()}">Open</span></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

@@ -1,9 +1,14 @@
 package steammachinist.stockmarket.entitymodel;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.Hibernate;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -38,5 +43,18 @@ public class Trade {
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.closed = closed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Trade trade = (Trade) o;
+        return id != null && Objects.equals(id, trade.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

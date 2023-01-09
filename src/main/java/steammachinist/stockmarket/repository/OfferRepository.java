@@ -9,7 +9,9 @@ import steammachinist.stockmarket.entitymodel.User;
 import java.util.List;
 
 public interface OfferRepository extends JpaRepository<Offer, Long> {
-    Offer findByTypeAndStockAndUnitPriceIsGreaterThanEqual(OfferType type, Stock stock, Double unitPrice);
-    Offer findByTypeAndStockAndUnitPriceIsLessThanEqual(OfferType type, Stock stock, Double unitPrice);
+    Offer findFirstByTypeAndStockAndUnitPriceIsGreaterThanEqualOrderByUnitPriceDesc(OfferType type, Stock stock, Double unitPrice);
+
+    Offer findFirstByTypeAndStockAndUnitPriceIsLessThanEqualOrderByUnitPriceAsc(OfferType type, Stock stock, Double unitPrice);
+
     List<Offer> findAllByCreator(User creator);
 }

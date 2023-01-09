@@ -30,7 +30,7 @@ public class OfferService {
             type = OfferType.BUY;
         }
         return offerRepository
-                .findByTypeAndStockAndUnitPriceIsGreaterThanEqual(type, offer.getStock(), offer.getUnitPrice());
+                .findFirstByTypeAndStockAndUnitPriceIsGreaterThanEqualOrderByUnitPriceDesc(type, offer.getStock(), offer.getUnitPrice());
     }
 
     public Offer findByOppositeTypeAndSmallerThanEqualPrice(Offer offer) {
@@ -41,7 +41,7 @@ public class OfferService {
             type = OfferType.BUY;
         }
         return offerRepository
-                .findByTypeAndStockAndUnitPriceIsLessThanEqual(type, offer.getStock(), offer.getUnitPrice());
+                .findFirstByTypeAndStockAndUnitPriceIsLessThanEqualOrderByUnitPriceAsc(type, offer.getStock(), offer.getUnitPrice());
     }
 
     public List<Offer> findAllUserOffers(User user) {
@@ -51,6 +51,7 @@ public class OfferService {
     public List<Offer> getAllOffers() {
         return offerRepository.findAll();
     }
+
 
     public void addOffer(Offer offer) {
         offerRepository.save(offer);

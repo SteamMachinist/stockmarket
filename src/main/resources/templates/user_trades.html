@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6"
+      xmlns:th="https://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>User trades</title>
+</head>
+<body>
+<table>
+  <thead>
+  <tr>
+    <th>Stock name</th>
+    <th>Type</th>
+    <th>Unit price</th>
+    <th>Quantity</th>
+    <th>Closed</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:if="${trades.isEmpty()}">
+    <td colspan="5">You have not made any trades</td>
+  </tr>
+  <tr th:each="trade, tradeStat : ${trades}">
+    <td><span th:text="${trade.getStock().getFullName()}">Stock name</span></td>
+    <td><span th:text="${types[tradeStat.index].name().toLowerCase()}">Type</span></td>
+    <td><span th:text="${trade.unitPrice}">Unit price</span></td>
+    <td><span th:text="${trade.getQuantity()}">Quantity</span></td>
+    <td><span th:text="${trade.getClosed()}">Open</span></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
