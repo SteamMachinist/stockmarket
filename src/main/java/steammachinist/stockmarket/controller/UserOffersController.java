@@ -28,7 +28,7 @@ public class UserOffersController {
     private final StockService stockService;
     private final OfferService offerService;
 
-    private final OfferCreationService offerCreationService;
+    private final OfferManagerService offerManagerService;
 
     @GetMapping("/create/{type}")
     public String setupCreateOffer(@AuthenticationPrincipal User user, Model model, @PathVariable String type) {
@@ -52,14 +52,14 @@ public class UserOffersController {
     @PostMapping("/create/{type}")
     public String createOffer(@AuthenticationPrincipal User user, Model model, Offer offer, @PathVariable String type) {
         String resultMessage = "";
-        if (offer.getType() == OfferType.BUY && !offerCreationService.checkEnoughBalance(user, offer)) {
+        if (offer.getType() == OfferType.BUY && !offerManagerService.checkEnoughBalance(user, offer)) {
             resultMessage = "Can't create buy offer: not enough balance";
         }
-        else if (offer.getType() == OfferType.SELL && !offerCreationService.checkEnoughPositionQuantity(user, offer)){
+        else if (offer.getType() == OfferType.SELL && !offerManagerService.checkEnoughPositionQuantity(user, offer)){
             resultMessage = "Can't create sell offer: not enough stocks";
         }
         else {
-            offerCreationService.addOfferFromUserAtDatetime(offer, user, LocalDateTime.now());
+            offerManagerService.addOfferFromUserAtDatetime(offer, user, LocalDateTime.now());
             resultMessage = "Offer created successfully";
         }
         model.addAttribute("resultMessage", resultMessage);

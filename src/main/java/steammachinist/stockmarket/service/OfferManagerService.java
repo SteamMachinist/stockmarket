@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 
 @Service
 @RequiredArgsConstructor
-public class OfferCreationService {
+public class OfferManagerService {
     private final UserService userService;
     private final PositionService positionService;
     private final StockService stockService;

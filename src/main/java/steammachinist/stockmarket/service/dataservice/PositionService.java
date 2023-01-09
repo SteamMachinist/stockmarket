@@ -32,6 +32,10 @@ public class PositionService {
         positionRepository.saveAll(positions);
     }
 
+    public void deletePosition(Position position) {
+        positionRepository.delete(position);
+    }
+
     public long count() {
         return positionRepository.count();
     }

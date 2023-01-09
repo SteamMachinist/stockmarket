@@ -1,8 +1,7 @@
 package steammachinist.stockmarket.service.dataservice;
 
-import ch.qos.logback.core.encoder.EchoEncoder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +14,6 @@ import steammachinist.stockmarket.repository.UserRepository;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +23,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
     public User getUserById(Long id) throws Exception {
         return userRepository.findById(id)
@@ -43,6 +42,10 @@ public class UserService implements UserDetailsService {
 
     public void addUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        userRepository.save(user);
+    }
+
+    public void updateUser(User user) {
         userRepository.save(user);
     }
 
